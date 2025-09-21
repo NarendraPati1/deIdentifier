@@ -1,6 +1,8 @@
-﻿Flask
+Flask
 gunicorn
+#torch
 #gliner
+#transformers
 pandas
 Faker
 pytesseract
@@ -8,9 +10,6 @@ pillow
 pymupdf
 pdf2image
 python-docx
+phonenumbers
 #easyocr
-
-
-
-
 
