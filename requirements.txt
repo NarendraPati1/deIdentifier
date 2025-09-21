@@ -8,5 +8,7 @@ pillow
 pymupdf
 pdf2image
 python-docx
+easyocr
+
 
 
