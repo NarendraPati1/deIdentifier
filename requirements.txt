@@ -1,6 +1,5 @@
 ﻿Flask
 gunicorn
-torch
 gliner
 pandas
 Faker
@@ -9,6 +8,5 @@ pillow
 pymupdf
 pdf2image
 python-docx
-phonenumbers
-easyocr
+
 
