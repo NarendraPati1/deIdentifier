@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviality - AI Healthcare Data Deidentification Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 L80 25 L80 75 L50 90 L20 75 L20 25 Z' fill='%2314a085' stroke='%23218093' stroke-width='2'/%3E%3Cpath d='M35 35 L45 45 L65 25' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <span class="brand-text">Aviality</span>
+                <span class="brand-tag">HEALTHCARE AI</span>
+            </div>
+
+            <div class="nav-links">
+                <a href="#" class="nav-link active" onclick="showPage('home')">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="nav-link" onclick="showPage('deidentify')">
+                    <i class="fas fa-upload"></i>
+                    <span>Process Files</span>
+                </a>
+                <a href="#" class="nav-link" onclick="showPage('profile')" data-auth-required="true" style="display: none;">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </div>
+
+            <!-- Authentication Actions -->
+            <div class="nav-actions">
+                <div id="authActions" style="display: flex;">
+                    <button class="btn btn-secondary" onclick="showAuthModal('signin')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Sign In
+                    </button>
+                    <button class="btn btn-primary" onclick="showAuthModal('signup')">
+                        <i class="fas fa-user-plus"></i>
+                        Sign Up
+                    </button>
+                </div>
+
+                <div id="userMenu" class="user-menu" style="display: none;">
+                    <div class="user-info">
+                        <div class="user-avatar-small">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span id="userName" class="user-name"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    
+                    <div class="user-dropdown">
+                        <div class="user-dropdown-header">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-details">
+                                <div id="dropdownUserName" class="dropdown-user-name"></div>
+                                <div id="dropdownUserEmail" class="dropdown-user-email"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="user-dropdown-divider"></div>
+                        
+                        <a href="#" class="dropdown-item" onclick="showPage('profile')">
+                            <i class="fas fa-user-cog"></i>
+                            Profile & Settings
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="showPage('profile')">
+                            <i class="fas fa-key"></i>
+                            API Keys
+                        </a>
+                        
+                        <div class="user-dropdown-divider"></div>
+                        
+                        <a href="#" class="dropdown-item sign-out" onclick="signOut()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Sign Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Secure Your Healthcare Data with 
+                        <span class="gradient-text">AI-Powered</span>
+                        PII & PHI Detection
+                    </h1>
+                    <p class="hero-subtitle">
+                        Advanced AI algorithms automatically detect and protect sensitive healthcare information. Upload your documents and get comprehensive PII/PHI analysis with detailed reports for HIPAA compliance.
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-large" onclick="getStarted()">
+                            <i class="fas fa-rocket"></i>
+                            Start Processing Files
+                        </button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number">100K+</div>
+                            <div class="stat-label">Documents Processed</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">99.9%</div>
+                            <div class="stat-label">Accuracy Rate</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">HIPAA</div>
+                            <div class="stat-label">Compliant</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="hero-card-header">
+                            <div class="hero-card-title">
+                                <i class="fas fa-shield-alt"></i>
+                                Healthcare Data Protection
+                            </div>
+                        </div>
+                        <div class="hero-card-content">
+                            <div class="protection-item">
+                                <div class="protection-icon">
+                                    <i class="fas fa-user-secret"></i>
+                                </div>
+                                <div class="protection-info">
+                                    <div class="protection-title">PII Detection</div>
+                                    <div class="protection-subtitle">Names, addresses, phone numbers</div>
+                                </div>
+                                <div class="protection-status success">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div class="protection-item">
+                                <div class="protection-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <div class="protection-info">
+                                    <div class="protection-title">PHI Identification</div>
+                                    <div class="protection-subtitle">Medical records, health data</div>
+                                </div>
+                                <div class="protection-status success">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div class="protection-item">
+                                <div class="protection-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="protection-info">
+                                    <div class="protection-title">Data Security</div>
+                                    <div class="protection-subtitle">End-to-end encryption</div>
+                                </div>
+                                <div class="protection-status success">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="features-header">
+                <h2 class="section-title">Enterprise-grade AI for healthcare data protection</h2>
+                <p class="section-subtitle">Comprehensive PII and PHI detection with detailed reporting and compliance tracking</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="feature-title">AI-Powered Detection</h3>
+                    <p class="feature-description">Advanced machine learning models trained specifically for healthcare data to identify PII and PHI with high accuracy.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-download"></i>
+                    </div>
+                    <h3 class="feature-title">Detailed Excel Reports</h3>
+                    <p class="feature-description">Download comprehensive reports with PII and PHI data organized by labels and values for easy analysis and compliance.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">HIPAA Compliance</h3>
+                    <p class="feature-description">Fully compliant with healthcare regulations including HIPAA, ensuring your data processing meets all legal requirements.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Multi-Format Support</h3>
+                    <p class="feature-description">Process PDFs, Word documents, Excel files, and images with drag-and-drop simplicity and instant results.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Fast Processing</h3>
+                    <p class="feature-description">Process multiple files simultaneously with optimized algorithms for quick turnaround times without compromising accuracy.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3  class="feature-title">Simple API Access</h3>
+                    <p class="feature-description">Generate API keys with just a name - no complex forms or lengthy setup processes required.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to secure your healthcare data?</h2>
+                <p class="cta-subtitle">Join healthcare organizations using Aviality for comprehensive PII and PHI protection</p>
+                <div class="cta-actions">
+                    <button class="btn btn-primary btn-large" onclick="getStarted()">
+                        <i class="fas fa-rocket"></i>
+                        Process Files Now
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Deidentify Page -->
+    <div id="deidentify" class="page">
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-shield-alt"></i>
+                Healthcare Data Processing
+            </h1>
+            <p class="page-subtitle">Upload healthcare documents for comprehensive PII and PHI detection and analysis</p>
+        </div>
+
+        <!-- Upload Section -->
+        <div id="uploadSection" class="upload-section">
+            <div class="upload-container">
+                <!-- Replace the existing file input section -->
+                <div class="upload-options">
+                    <div class="upload-toggle">
+                        <button type="button" class="upload-toggle-btn active" onclick="switchUploadMode('files')">
+                            <i class="fas fa-file"></i> Files
+                        </button>
+                        <button type="button" class="upload-toggle-btn" onclick="switchUploadMode('folder')">
+                            <i class="fas fa-folder"></i> Folder
+                        </button>
+                    </div>
+                </div>
+
+                <input type="file" id="fileInput" multiple accept=".pdf,.docx,.doc,.xlsx,.xls,.png,.jpg,.jpeg,.zip" style="display: none;">
+                <input type="file" id="folderInput" webkitdirectory multiple style="display: none;">
+
+                <!-- Update upload area text -->
+                <div id="uploadArea" class="upload-area">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3 class="upload-title" id="uploadTitle">Drag & Drop Files Here</h3>
+                    <p class="upload-subtitle" id="uploadSubtitle">Or click to browse and select files</p>
+                    <div class="upload-formats">
+                        <span class="format-tag">PDF</span>
+                        <span class="format-tag">DOCX</span>
+                        <span class="format-tag">XLSX</span>
+                        <span class="format-tag">JPG</span>
+                        <span class="format-tag">PNG</span>
+                    </div>
+                </div>
+                
+                <input type="file" id="fileInput" multiple accept=".pdf,.docx,.doc,.xlsx,.xls,.png,.jpg,.jpeg,.zip" style="display: none;">
+                
+                <!-- Files Display -->
+                <div id="filesDisplay" class="files-display" style="display: none;">
+                    <div class="files-header">
+                        <h3>Selected Files (<span id="filesCount">0</span>)</h3>
+                        <button class="btn btn-secondary btn-sm" onclick="clearAllFiles()">
+                            <i class="fas fa-trash"></i>
+                            Clear All
+                        </button>
+                    </div>
+                    <div id="filesList" class="files-list"></div>
+                </div>
+
+                <!-- Process Section -->
+                <div class="process-section">
+                    <button id="processBtn" class="btn btn-primary process-btn" onclick="processFiles()" disabled>
+                        <i class="fas fa-cogs"></i>
+                        <span>Process Files</span>
+                    </button>
+                    <p class="process-note">Files are processed securely and deleted automatically after completion</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Processing Section -->
+        <div id="processingSection" class="processing-section" style="display: none;">
+            <div class="processing-card">
+                <div class="processing-icon">
+                    <div class="spinner-large"></div>
+                </div>
+                <h3>Analyzing Your Files</h3>
+                <p>Our AI is detecting PII and PHI data in your documents...</p>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span class="progress-message">Initializing...</span>
+                        <span class="progress-percent">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="results-section" style="display: none;">
+            <div class="results-header">
+                <div class="success-animation">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h2>Analysis Complete!</h2>
+                <p>Your files have been successfully analyzed for PII and PHI data</p>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-files-o"></i>
+                    </div>
+                    <div class="result-number" id="filesProcessedCount">0</div>
+                    <div class="result-label">Files Processed</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <div class="result-number" id="piiItemsCount">0</div>
+                    <div class="result-label">PII Items Found</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="result-number" id="phiItemsCount">0</div>
+                    <div class="result-label">PHI Items Found</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="result-number" id="processingTime">0</div>
+                    <div class="result-label">Processing Time (s)</div>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-primary btn-large" onclick="downloadResults()">
+                    <i class="fas fa-download"></i>
+                    Download PII/PHI Report
+                </button>
+                <button class="btn btn-secondary btn-large" onclick="processAgain()">
+                    <i class="fas fa-redo"></i>
+                    Process More Files
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profile" class="page">
+        <div class="profile-container">
+            <!-- Profile Banner -->
+            <div class="profile-banner">
+                <div class="profile-info">
+                    <div class="profile-avatar-large">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-details">
+                        <h2 id="profileUserName">User Profile</h2>
+                        <p id="profileUserEmail">user@example.com</p>
+                        <div class="profile-meta">
+                            <div class="profile-join-date">
+                                <i class="fas fa-calendar"></i>
+                                <span>Joined <span id="profileJoinDate">Recently</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="profile-content">
+                <!-- Profile Tabs -->
+                <div class="profile-tabs">
+                    <button class="profile-tab active" onclick="showProfileTab('account')">
+                        <i class="fas fa-user-cog"></i>
+                        Account Information
+                    </button>
+                    <button class="profile-tab" onclick="showProfileTab('apikeys')">
+                        <i class="fas fa-key"></i>
+                        API Keys Management
+                    </button>
+                </div>
+
+                <!-- Account Tab -->
+                <div id="accountTab" class="profile-tab-content active">
+                    <div class="section">
+                        <h3 class="section-title">Account Information</h3>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="profileName" class="form-input" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="profileEmailInput" class="form-input" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Account Created</label>
+                            <input type="text" id="profileCreatedAt" class="form-input" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Keys Tab -->
+                <div id="apikeysTab" class="profile-tab-content"> 
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-header-content">
+                                <h3 class="section-title">API Keys Management</h3>
+                                <p class="section-description">Manage your API keys for programmatic access to Aviality services</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="showGenerateKeyModal()">
+                                <i class="fas fa-plus"></i>
+                                Generate New Key
+                            </button>
+                        </div>
+                        
+                        <div id="apiKeysList" class="api-keys-list">
+                            <!-- API keys will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generate API Key Modal -->
+    <div id="generateKeyModal" class="modal" style="display: none;">
+        <div class="modal-overlay" onclick="closeGenerateKeyModal()"></div>
+        <div class="modal-content api-key-modal">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <div class="modal-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div>
+                        <h3 class="modal-title">Generate New API Key</h3>
+                        <p class="modal-subtitle">Create a new API key for programmatic access</p>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeGenerateKeyModal()" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newKeyName" class="form-label">
+                        <i class="fas fa-tag"></i>
+                        Key Name *
+                    </label>
+                    <input 
+                        type="text" 
+                        id="newKeyName" 
+                        class="form-input" 
+                        placeholder="e.g., Production API, Development Key, Mobile App"
+                        maxlength="50"
+                        required
+                    >
+                    <div class="form-help">
+                        <i class="fas fa-info-circle"></i>
+                        Choose a descriptive name to help you identify this key later
+                    </div>
+                </div>
+                
+                <div class="api-key-info">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Security Notice</h4>
+                            <p>Store your API key securely. It will only be displayed once after generation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="key-permissions">
+                        <h4>This key will have access to:</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> File processing endpoints</li>
+                            <li><i class="fas fa-check"></i> PII/PHI detection services</li>
+                            <li><i class="fas fa-check"></i> Report generation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeGenerateKeyModal()">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+                <button class="btn btn-primary" onclick="generateNewApiKey()" id="generateKeyBtn">
+                    <i class="fas fa-plus"></i>
+                    Generate API Key
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+    <!-- Auth Modal -->
+<div id="authModal" class="modal" style="display: none;">
+    <div class="modal-overlay" onclick="closeAuthModal()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="authModalTitle">Welcome Back</h2>
+            <button class="modal-close" onclick="closeAuthModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="auth-toggle">
+            <button class="auth-toggle-btn active" onclick="switchToSignIn()">Sign In</button>
+            <button class="auth-toggle-btn" onclick="switchToSignUp()">Sign Up</button>
+        </div>
+        
+        <!-- Sign In Form -->
+        <form id="signInForm" class="auth-form">
+            <div class="form-group">
+                <label for="signInEmail">Email Address</label>
+                <input type="email" id="signInEmail" name="email" class="form-input" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="signInPassword">Password</label>
+                <input type="password" id="signInPassword" name="password" class="form-input" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-large">
+                <i class="fas fa-sign-in-alt"></i>
+                Sign In
+            </button>
+        </form>
+        
+        <form id="signUpForm" class="auth-form" style="display: none;">
+            <div class="form-group">
+                <label for="signUpName">Full Name</label>
+                <input type="text" id="signUpName" name="name" class="form-input" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="signUpEmail">Email Address</label>
+                <input type="email" id="signUpEmail" name="email" class="form-input" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="signUpOrganization">Organization</label>
+                <input type="text" id="signUpOrganization" name="organization" class="form-input" placeholder="Hospital">
+            </div>
+            
+            <div class="form-group">
+                <label for="signUpPassword">Password</label>
+                <input type="password" id="signUpPassword" name="password" class="form-input" required minlength="6">
+            </div>
+            
+            <!-- ADD THIS MISSING SUBMIT BUTTON -->
+            <button type="submit" class="btn btn-primary btn-full-width">
+                <i class="fas fa-user-plus"></i>
+                Create Account
+            </button>
+        </form>
+    </div>
+</div>
+    <!-- Load Scripts -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    
+</body>
+</html>
