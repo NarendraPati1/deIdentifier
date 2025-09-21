@@ -1,6 +1,6 @@
 ﻿Flask
-gunicorn
-gliner
+#gunicorn
+#gliner
 pandas
 Faker
 pytesseract
@@ -8,7 +8,8 @@ pillow
 pymupdf
 pdf2image
 python-docx
-easyocr
+#easyocr
+
 
 
 
