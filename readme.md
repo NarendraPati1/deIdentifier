@@ -84,7 +84,7 @@ node server.js
   "entities_found": {
     "name": ["John Doe"],
     "email": ["john@example.com"],
-    "phone": ["555-123-4567"]
+    "phone": ["770-123-4567"]
   }
 }
 ```
@@ -128,7 +128,7 @@ Returns system health status.
 |----------|----------|------------------|
 | **Names** | John Doe, Jane Smith | Pattern matching + heuristics |
 | **Email Addresses** | user@domain.com | Regex patterns |
-| **Phone Numbers** | (555) 123-4567, +1-555-123-4567 | Multiple format regex |
+| **Phone Numbers** |  +91-770-123-4567 | Multiple format regex |
 | **Social Security Numbers** | 123-45-6789, 123456789 | Format-specific regex |
 | **Credit Card Numbers** | 4111-1111-1111-1111 | Luhn algorithm validation |
 | **IP Addresses** | 192.168.1.1 | IPv4 pattern matching |
@@ -200,56 +200,3 @@ SSN: 123-45-6789
 Address: 456 Oak Avenue, Springfield, IL 62701
 ```
 
-## 🔮 Future Improvements
-
-- [ ] **Anonymization Strategies**: K-anonymity, L-diversity options
-- [ ] **Docker Support**: Containerized deployment
-- [ ] **Audit Logs**: Track all de-identification operations
-- [ ] **Role-based Access**: Multi-user support with permissions
-- [ ] **Cloud Deployment**: AWS/Azure deployment guides
-
-## 🔐 Security Considerations
-
-- **Data Handling**: No persistent storage of original PII data
-- **Memory Management**: Files processed in memory only
-- **Session Isolation**: Each request processed independently
-- **Input Validation**: Strict file type and size validation
-- **Error Handling**: Secure error messages without data exposure
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Author
-
-**Developed by Narendra** 🚀
-
-- GitHub: [@NarendraPati1](https://github.com/NarendraPati1)
-- Email: your.email@example.com
-
-## 🆘 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/your-username/pii-system/issues) page
-2. Create a new issue with detailed description
-3. Join our [Discussions](https://github.com/your-username/pii-system/discussions)
-
-## 📈 Performance Notes
-
-- **Memory Usage**: ~50MB base + file size for processing
-- **Processing Speed**: ~1000 records/second for CSV files
-- **Concurrent Requests**: Supports multiple simultaneous requests
-- **File Size Limits**: 10MB default (configurable)
-
----
-
-⭐ **Star this repo if you find it helpful!**
