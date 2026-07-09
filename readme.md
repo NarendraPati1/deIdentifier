@@ -1,6 +1,6 @@
 # 🔒 PII De-Identification System
 
-A comprehensive **PII (Personally Identifiable Information) De-Identification System** that detects sensitive information (names, phone numbers, emails, addresses, etc.) from uploaded text or files and replaces them with synthetic values to protect user privacy.
+A comprehensive **PII (Personally Identifiable Information) De-Identification System** that detects sensitive information (names, phone numbers, emails, addresses, etc.) from uploaded text or files[...]
 
 ## 🚀 Features
 
@@ -52,7 +52,6 @@ pip install -r requirements.txt
 # Start the FastAPI server
 uvicorn app:app --reload
 ```
-👉 **Backend runs on:** http://localhost:8000
 
 ### 3️⃣ Setup Frontend (Node.js)
 ```bash
@@ -62,7 +61,6 @@ npm install
 # Start the frontend server
 node server.js
 ```
-👉 **Frontend runs on:** http://localhost:3000
 
 ## 🔑 API Endpoints
 
@@ -116,7 +114,7 @@ Returns system health status.
 
 ## 🖥️ Using the Web Interface
 
-1. Open your browser and navigate to http://localhost:3000
+1. Open your browser and navigate to the frontend application
 2. **Text Processing**: Paste text in the input field and click "De-identify Text"
 3. **File Upload**: Choose a CSV or Excel file and click "Upload & Process"
 4. **View Results**: See original vs. de-identified data side by side
@@ -158,11 +156,11 @@ Returns system health status.
 ```bash
 # Backend
 BACKEND_PORT=8000
-BACKEND_HOST=localhost
+BACKEND_HOST=0.0.0.0
 
 # Frontend
 FRONTEND_PORT=3000
-API_BASE_URL=http://localhost:8000
+API_BASE_URL=http://your-api-server
 ```
 
 ### Customization Options
@@ -174,20 +172,20 @@ API_BASE_URL=http://localhost:8000
 ## 📊 API Documentation
 
 FastAPI provides interactive API documentation:
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
+- **Swagger UI**: `/docs` endpoint on your API server
+- **ReDoc**: `/redoc` endpoint on your API server
 
 ## 🧪 Testing
 
 ### Test the API directly:
 ```bash
 # Test text de-identification
-curl -X POST "http://localhost:8000/deidentify" \
+curl -X POST "http://your-api-server/deidentify" \
      -H "Content-Type: application/json" \
      -d '{"text": "Contact John Doe at john@email.com"}'
 
 # Health check
-curl http://localhost:8000/health
+curl http://your-api-server/health
 ```
 
 ### Sample Test Data:
@@ -199,4 +197,3 @@ Phone: (555) 234-5678
 SSN: 123-45-6789
 Address: 456 Oak Avenue, Springfield, IL 62701
 ```
-
