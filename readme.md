@@ -1,25 +1,25 @@
 # 🔒 PII De-Identification System
 
-A comprehensive **PII (Personally Identifiable Information) De-Identification System** that detects sensitive information (names, phone numbers, emails, addresses, etc.) from uploaded text or files[...]
+A comprehensive **PII (Personally Identifiable Information) De-Identification System** that detects sensitive information (names, phone numbers, emails, addresses, etc.) from uploaded text or files and replaces them with synthetic data while maintaining data integrity.
 
 ## 🚀 Features
 
 - **Smart PII Detection**: Identifies common PII entities including names, emails, phone numbers, addresses, SSNs, credit cards, IP addresses, and more
 - **Synthetic Data Generation**: Replaces detected PII with realistic but fake placeholders using Faker library
 - **Multiple Input Formats**: Support for plain text, CSV, and Excel files (.xlsx, .xls)
-- **RESTful API**: Clean API endpoints for programmatic integration
-- **Web Interface**: User-friendly frontend for testing and demonstration
-- **Batch Processing**: Process entire datasets while maintaining data structure
-- **Consistent Replacements**: Same PII values get replaced consistently within a session
+- **RESTful API**: Clean, scalable API endpoints for seamless integration
+- **Web Interface**: Intuitive interface for data processing and visualization
+- **Batch Processing**: Process large datasets efficiently while maintaining data structure
+- **Consistent Replacements**: Same PII values get replaced consistently within processing sessions
 
 ## 📂 Project Structure
 
 ```
-pii-system/
-├── app.py                  # FastAPI backend server
-├── server.js              # Node.js frontend server
+deIdentifier/
+├── app.py                  # FastAPI backend application
+├── server.js              # Frontend application server
 ├── pii_detector.py         # Core PII detection logic
-├── replacer.py            # Synthetic data generation
+├── replacer.py            # Synthetic data generation engine
 ├── requirements.txt       # Python dependencies
 ├── package.json          # Node.js dependencies
 ├── static/               # Frontend assets (CSS, JS)
@@ -27,33 +27,25 @@ pii-system/
 └── README.md            # This file
 ```
 
-## ⚙️ Setup Instructions
+## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.8+
-- Node.js 16+
-- npm or yarn
+- Python 3.8 or higher
+- Node.js 16 or higher
+- npm or yarn package manager
 
-### 1️⃣ Clone the Repository
+### Installation & Deployment
+
+#### Backend Setup (FastAPI)
 ```bash
-git clone https://github.com/your-username/pii-system.git
-cd pii-system
-```
-
-### 2️⃣ Setup Backend (FastAPI)
-```bash
-# Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
-
 # Install Python dependencies
 pip install -r requirements.txt
 
 # Start the FastAPI server
-uvicorn app:app --reload
+uvicorn app:app --host 0.0.0.0 --port 8000
 ```
 
-### 3️⃣ Setup Frontend (Node.js)
+#### Frontend Setup (Node.js)
 ```bash
 # Install Node.js dependencies
 npm install
@@ -62,10 +54,14 @@ npm install
 node server.js
 ```
 
+The system is now ready to accept requests from any client or service.
+
 ## 🔑 API Endpoints
 
 ### 1. Text De-identification
 **POST** `/deidentify`
+
+Process text to detect and replace PII entities.
 
 **Request Body:**
 ```json
@@ -87,10 +83,10 @@ node server.js
 }
 ```
 
-### 2. File Upload
+### 2. File Processing
 **POST** `/upload`
 
-Upload CSV or Excel files for bulk PII processing.
+Process CSV or Excel files for bulk PII de-identification.
 
 **Response:**
 ```json
@@ -110,15 +106,15 @@ Upload CSV or Excel files for bulk PII processing.
 ### 3. Health Check
 **GET** `/health`
 
-Returns system health status.
+Verify system status and availability.
 
-## 🖥️ Using the Web Interface
+## 🖥️ Web Interface
 
-1. Open your browser and navigate to the frontend application
-2. **Text Processing**: Paste text in the input field and click "De-identify Text"
-3. **File Upload**: Choose a CSV or Excel file and click "Upload & Process"
-4. **View Results**: See original vs. de-identified data side by side
-5. **Download**: Get processed files with PII removed
+The web interface provides:
+1. **Text Processing**: Submit text for immediate de-identification
+2. **File Upload**: Process CSV and Excel datasets
+3. **Results Visualization**: View original vs. de-identified data
+4. **Data Export**: Download processed files in original format
 
 ## 🛡️ PII Types Detected
 
@@ -138,17 +134,17 @@ Returns system health status.
 ## 📦 Dependencies
 
 ### Backend (Python)
-- **FastAPI**: Modern web framework for building APIs
-- **Pandas**: Data manipulation and analysis
-- **Faker**: Generate fake but realistic data
-- **Uvicorn**: ASGI server implementation
-- **OpenPyXL**: Excel file processing
+- **FastAPI**: High-performance web framework
+- **Pandas**: Data processing and analysis
+- **Faker**: Realistic synthetic data generation
+- **Uvicorn**: ASGI application server
+- **OpenPyXL**: Excel file handling
 
 ### Frontend (Node.js)
 - **Express**: Web application framework
-- **Multer**: File upload handling
-- **Axios**: HTTP client for API calls
-- **EJS**: Template engine
+- **Multer**: File upload management
+- **Axios**: HTTP client
+- **EJS**: Template rendering
 
 ## 🔧 Configuration
 
@@ -160,35 +156,35 @@ BACKEND_HOST=0.0.0.0
 
 # Frontend
 FRONTEND_PORT=3000
-API_BASE_URL=http://your-api-server
+API_BASE_URL=https://your-api-endpoint
 ```
 
-### Customization Options
-- **Locale Settings**: Change Faker locale in `replacer.py`
-- **Detection Patterns**: Modify regex patterns in `pii_detector.py`
-- **Replacement Strategies**: Customize synthetic data generation
-- **File Size Limits**: Adjust upload limits in `server.js`
+### Customization
+- **Locale Settings**: Configure Faker locale in `replacer.py`
+- **Detection Patterns**: Customize regex patterns in `pii_detector.py`
+- **Replacement Strategies**: Modify synthetic data generation logic
+- **Upload Limits**: Adjust file size constraints in `server.js`
 
 ## 📊 API Documentation
 
-FastAPI provides interactive API documentation:
-- **Swagger UI**: `/docs` endpoint on your API server
-- **ReDoc**: `/redoc` endpoint on your API server
+Interactive API documentation is available at:
+- **Swagger UI**: `/docs` endpoint
+- **ReDoc**: `/redoc` endpoint
 
 ## 🧪 Testing
 
-### Test the API directly:
+### API Integration Example
 ```bash
-# Test text de-identification
-curl -X POST "http://your-api-server/deidentify" \
+# De-identify text
+curl -X POST "https://your-api-endpoint/deidentify" \
      -H "Content-Type: application/json" \
      -d '{"text": "Contact John Doe at john@email.com"}'
 
 # Health check
-curl http://your-api-server/health
+curl https://your-api-endpoint/health
 ```
 
-### Sample Test Data:
+### Sample Data
 ```text
 Employee Record:
 Name: Sarah Johnson
@@ -197,3 +193,19 @@ Phone: (555) 234-5678
 SSN: 123-45-6789
 Address: 456 Oak Avenue, Springfield, IL 62701
 ```
+
+## 📋 Use Cases
+
+- **Healthcare Systems**: De-identify patient records for research
+- **Financial Services**: Secure sensitive customer data
+- **Data Analytics**: Prepare datasets for analysis without exposing PII
+- **Compliance**: Meet GDPR, HIPAA, and other privacy regulations
+- **Data Sharing**: Safely share datasets with third parties
+
+## 📄 License
+
+See LICENSE file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome. Please submit pull requests or open issues for bugs and feature requests.
